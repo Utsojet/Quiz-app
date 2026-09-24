@@ -129,14 +129,25 @@ class ProgressHeader extends StatelessWidget {
         ),
         const SizedBox(height: 10),
 
-        // Progress Bar
+        // Animated Progress Bar
         ClipRRect(
           borderRadius: BorderRadius.circular(8),
-          child: LinearProgressIndicator(
-            value: progress.clamp(0.0, 1.0),
-            minHeight: 6,
-            backgroundColor: const Color(0xFFE2E8F0),
-            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF0080FF)),
+          child: TweenAnimationBuilder<double>(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            tween: Tween<double>(
+              begin: 0.0,
+              end: progress.clamp(0.0, 1.0),
+            ),
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                minHeight: 6,
+                backgroundColor: const Color(0xFFE2E8F0),
+                valueColor:
+                    const AlwaysStoppedAnimation<Color>(Color(0xFF0080FF)),
+              );
+            },
           ),
         ),
       ],

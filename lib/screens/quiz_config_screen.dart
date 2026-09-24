@@ -200,7 +200,9 @@ class QuizConfigScreen extends StatelessWidget {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: provider.difficulty,
+                        value: _difficultyOptions.contains(provider.difficulty)
+                            ? provider.difficulty
+                            : _difficultyOptions.first,
                         isExpanded: true,
                         icon: const Icon(
                           Icons.keyboard_arrow_down_rounded,
@@ -251,7 +253,9 @@ class QuizConfigScreen extends StatelessWidget {
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
-                        value: provider.questionType,
+                        value: _typeOptions.contains(provider.questionType)
+                            ? provider.questionType
+                            : _typeOptions.first,
                         isExpanded: true,
                         icon: const Icon(
                           Icons.keyboard_arrow_down_rounded,

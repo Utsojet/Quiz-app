@@ -23,7 +23,7 @@ class AnswerButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // Determine card background and border colors based on quiz answer state
     Color backgroundColor = AppColors.answerNeutralBg;
-    Color borderColor = const Color(0xFFF1F5F9);
+    Color borderColor = const Color(0xFFE2E8F0);
     Color textColor = AppColors.textPrimary;
     Widget trailingIndicator = Container(
       width: 22,
@@ -77,6 +77,9 @@ class AnswerButton extends StatelessWidget {
           ),
           child: const Icon(Icons.check, size: 16, color: Colors.white),
         );
+      } else {
+        // Unselected incorrect options when answered
+        textColor = AppColors.textMuted;
       }
     }
 

@@ -14,7 +14,7 @@ class CategorySkeletonGrid extends StatelessWidget {
         crossAxisCount: 2,
         crossAxisSpacing: 16,
         mainAxisSpacing: 16,
-        childAspectRatio: 0.95,
+        childAspectRatio: 0.88,
       ),
       itemBuilder: (context, index) {
         return Container(

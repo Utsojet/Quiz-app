@@ -10,8 +10,29 @@ import 'result_screen.dart';
 /// Screen 4: Quiz Screen (Matches Figma Screenshots 4 & 5)
 /// Displays one question at a time, animated progress bar, countdown timer,
 /// shuffled options, correct/incorrect instant feedback, and Next button.
-class QuizScreen extends StatelessWidget {
+class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
+
+  @override
+  State<QuizScreen> createState() => _QuizScreenState();
+}
+
+class _QuizScreenState extends State<QuizScreen> {
+  QuizProvider? _quizProvider;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _quizProvider = Provider.of<QuizProvider>(context, listen: false);
+  }
+
+  @override
+  void dispose() {
+    if (_quizProvider != null && !_quizProvider!.isQuizFinished) {
+      _quizProvider!.stopTimer();
+    }
+    super.dispose();
+  }
 
   Future<bool> _showExitConfirmation(BuildContext context) async {
     final quizProvider = context.read<QuizProvider>();

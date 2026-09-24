@@ -47,6 +47,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           ),
           content: TextField(
             controller: _nameController,
+            autofocus: true,
+            textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
               hintText: 'Enter student name',
               border: OutlineInputBorder(
@@ -57,6 +59,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 borderSide: const BorderSide(color: AppColors.primary, width: 2),
               ),
             ),
+            onSubmitted: (val) {
+              final newName = val.trim();
+              if (newName.isNotEmpty) {
+                setState(() => _studentName = newName);
+                StorageService.saveStudentName(newName);
+              }
+              Navigator.pop(context);
+            },
           ),
           actions: [
             TextButton(
@@ -139,13 +149,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              _studentName,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textSecondary,
-                                letterSpacing: 0.2,
+                            Flexible(
+                              child: Text(
+                                _studentName,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.textSecondary,
+                                  letterSpacing: 0.2,
+                                ),
                               ),
                             ),
                             const SizedBox(width: 6),
