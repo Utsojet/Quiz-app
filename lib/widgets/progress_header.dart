@@ -30,7 +30,48 @@ class ProgressHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Question Counter (e.g. 7/10)
+              // Left: Countdown Timer Indicator
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: isTimerLow
+                      ? const Color(0xFFFEE2E2)
+                      : const Color(0xFFF1F5F9),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: isTimerLow
+                        ? const Color(0xFFEF4444)
+                        : const Color(0xFFE2E8F0),
+                    width: 1,
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      Icons.timer_outlined,
+                      size: 15,
+                      color: isTimerLow
+                          ? const Color(0xFFDC2626)
+                          : AppColors.textSecondary,
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${remainingSeconds}s',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: isTimerLow
+                            ? const Color(0xFFDC2626)
+                            : AppColors.textSecondary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Center: Question Counter (e.g. 7/10)
               Text(
                 '$currentQuestion/$totalQuestions',
                 style: const TextStyle(
@@ -41,55 +82,17 @@ class ProgressHeader extends StatelessWidget {
                 ),
               ),
 
-              // Countdown Timer Indicator
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: isTimerLow
-                      ? const Color(0xFFFEE2E2)
-                      : AppColors.primaryLight,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: isTimerLow
-                        ? const Color(0xFFEF4444)
-                        : AppColors.primary.withValues(alpha: 0.3),
-                    width: 1,
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.timer_outlined,
-                      size: 16,
-                      color: isTimerLow
-                          ? const Color(0xFFDC2626)
-                          : AppColors.primary,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      '${remainingSeconds}s',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: isTimerLow
-                            ? const Color(0xFFDC2626)
-                            : AppColors.primary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // EXIT button matching screenshot: "EXIT ➔"
+              // Right: EXIT button matching screenshot: "EXIT ➔"
               InkWell(
                 onTap: onExit,
                 borderRadius: BorderRadius.circular(8),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                   child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         'EXIT',
                         style: TextStyle(
                           fontSize: 15,
@@ -98,11 +101,24 @@ class ProgressHeader extends StatelessWidget {
                           letterSpacing: 0.5,
                         ),
                       ),
-                      SizedBox(width: 4),
-                      Icon(
-                        Icons.logout_rounded,
-                        size: 20,
-                        color: AppColors.textPrimary,
+                      const SizedBox(width: 6),
+                      Container(
+                        width: 24,
+                        height: 24,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.textPrimary,
+                            width: 1.8,
+                          ),
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 14,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
                       ),
                     ],
                   ),

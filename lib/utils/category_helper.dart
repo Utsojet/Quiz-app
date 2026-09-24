@@ -105,6 +105,21 @@ class CategoryHelper {
 
   /// Formats category name cleanly (e.g., "Entertainment: Books" -> "Books")
   static String formatName(String rawName) {
+    if (rawName == 'Entertainment: Japanese Anime & Manga') {
+      return 'Anime & Manga';
+    }
+    if (rawName == 'Entertainment: Cartoon & Animations') {
+      return 'Cartoons';
+    }
+    if (rawName == 'Entertainment: Musicals & Theatres') {
+      return 'Musicals & Theatre';
+    }
+    if (rawName == 'Entertainment: Video Games') {
+      return 'Video Games';
+    }
+    if (rawName == 'Entertainment: Board Games') {
+      return 'Board Games';
+    }
     if (rawName.startsWith('Entertainment: ')) {
       return rawName.replaceFirst('Entertainment: ', '');
     }
