@@ -35,115 +35,151 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-          onPressed: () => Navigator.pop(context),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 840),
+            child: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                onPressed: () => Navigator.pop(context),
+              ),
+              title: const SizedBox.shrink(),
+            ),
+          ),
         ),
-        title: const SizedBox.shrink(),
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header Section matching Screenshot 2
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Quizzical',
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.w900,
-                      color: AppColors.textPrimary,
-                      letterSpacing: -0.5,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'choose a category to focus on:',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textSecondary.withValues(alpha: 0.8),
-                      letterSpacing: 0.2,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 12),
-
-            // Content Area (Loading, Error, or Category Grid)
-            Expanded(
-              child: Consumer<CategoryProvider>(
-                builder: (context, provider, child) {
-                  if (provider.isLoading && !provider.hasCategories) {
-                    return const CategorySkeletonGrid();
-                  }
-
-                  if (provider.error != null && !provider.hasCategories) {
-                    return ErrorRetryWidget(
-                      title: 'Unable to Load Categories',
-                      message: provider.error!,
-                      buttonText: 'Retry',
-                      onRetry: () => provider.retry(),
-                    );
-                  }
-
-                  final categories = provider.categories;
-
-                  if (categories.isEmpty) {
-                    return Center(
-                      child: ErrorRetryWidget(
-                        title: 'No Categories Available',
-                        message: 'Could not find any categories right now.',
-                        buttonText: 'Refresh',
-                        onRetry: () => provider.retry(),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 840),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header Section matching Screenshot 2
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Quizzical',
+                        style: TextStyle(
+                          fontSize: 34,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.textPrimary,
+                          letterSpacing: -0.5,
+                        ),
                       ),
-                    );
-                  }
+                      const SizedBox(height: 6),
+                      Text(
+                        'choose a category to focus on:',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.textSecondary.withValues(alpha: 0.8),
+                          letterSpacing: 0.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
 
-                  return GridView.builder(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 12,
-                    ),
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: categories.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
-                      childAspectRatio: 0.88,
-                    ),
-                    itemBuilder: (context, index) {
-                      final category = categories[index];
-                      return CategoryCard(
-                        category: category,
-                        index: index,
-                        onTap: () {
-                          // Pass selected category to QuizProvider and navigate
-                          final quizProvider = context.read<QuizProvider>();
-                          quizProvider.selectCategory(category.id, category.name);
+                // Content Area (Loading, Error, or Category Grid)
+                Expanded(
+                  child: Consumer<CategoryProvider>(
+                    builder: (context, provider, child) {
+                      if (provider.isLoading && !provider.hasCategories) {
+                        return const CategorySkeletonGrid();
+                      }
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const QuizConfigScreen(),
+                      if (provider.error != null && !provider.hasCategories) {
+                        return ErrorRetryWidget(
+                          title: 'Unable to Load Categories',
+                          message: provider.error!,
+                          buttonText: 'Retry',
+                          onRetry: () => provider.retry(),
+                        );
+                      }
+
+                      final categories = provider.categories;
+
+                      if (categories.isEmpty) {
+                        return Center(
+                          child: ErrorRetryWidget(
+                            title: 'No Categories Available',
+                            message: 'Could not find any categories right now.',
+                            buttonText: 'Refresh',
+                            onRetry: () => provider.retry(),
+                          ),
+                        );
+                      }
+
+                      return LayoutBuilder(
+                        builder: (context, constraints) {
+                          final width = constraints.maxWidth;
+                          int crossAxisCount = 2;
+                          double childAspectRatio = 0.88;
+
+                          if (width >= 720) {
+                            crossAxisCount = 4;
+                            childAspectRatio = 0.95;
+                          } else if (width >= 480) {
+                            crossAxisCount = 3;
+                            childAspectRatio = 0.92;
+                          } else {
+                            crossAxisCount = 2;
+                            childAspectRatio = 0.88;
+                          }
+
+                          return GridView.builder(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 12,
                             ),
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: categories.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 16,
+                              mainAxisSpacing: 16,
+                              childAspectRatio: childAspectRatio,
+                            ),
+                            itemBuilder: (context, index) {
+                              final category = categories[index];
+                              return CategoryCard(
+                                category: category,
+                                index: index,
+                                onTap: () {
+                                  // Pass selected category to QuizProvider and navigate
+                                  final quizProvider =
+                                      context.read<QuizProvider>();
+                                  quizProvider.selectCategory(
+                                      category.id, category.name);
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) =>
+                                          const QuizConfigScreen(),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           );
                         },
                       );
                     },
-                  );
-                },
-              ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

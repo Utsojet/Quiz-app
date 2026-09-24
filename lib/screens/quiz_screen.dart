@@ -103,8 +103,11 @@ class _QuizScreenState extends State<QuizScreen> {
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: SafeArea(
-          child: Consumer<QuizProvider>(
-            builder: (context, provider, child) {
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 640),
+              child: Consumer<QuizProvider>(
+                builder: (context, provider, child) {
               final Question? question = provider.currentQuestion;
 
               if (question == null) {
@@ -236,6 +239,9 @@ class _QuizScreenState extends State<QuizScreen> {
           ),
         ),
       ),
-    );
+    ),
+  ),
+);
   }
 }
+

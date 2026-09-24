@@ -82,16 +82,27 @@ class QuizConfigScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-          onPressed: () => Navigator.pop(context),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 580),
+            child: AppBar(
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+                onPressed: () => Navigator.pop(context),
+              ),
+              title: const SizedBox.shrink(),
+            ),
+          ),
         ),
-        title: const SizedBox.shrink(),
       ),
       body: SafeArea(
-        child: Consumer<QuizProvider>(
-          builder: (context, provider, child) {
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 580),
+            child: Consumer<QuizProvider>(
+              builder: (context, provider, child) {
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: Column(
@@ -326,6 +337,9 @@ class QuizConfigScreen extends StatelessWidget {
           },
         ),
       ),
-    );
+    ),
+  ),
+);
   }
 }
+

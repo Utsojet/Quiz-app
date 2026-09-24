@@ -150,134 +150,220 @@ class WelcomeHeroIllustration extends StatelessWidget {
             ),
           ),
 
-          // Central Boy Face Avatar with Purple Hair (Figma screenshot)
+          // Central Boy Face Avatar with Purple Hair (Figma character design)
           Positioned(
-            bottom: size * 0.16,
-            child: Container(
-              width: size * 0.44,
-              height: size * 0.44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFFFFDFBA),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.12),
-                    blurRadius: 16,
-                    offset: const Offset(0, 8),
+            bottom: size * 0.14,
+            child: Stack(
+              alignment: Alignment.center,
+              clipBehavior: Clip.none,
+              children: [
+                // Teal/Blue Shirt collar at the base
+                Positioned(
+                  bottom: -size * 0.05,
+                  child: Container(
+                    width: size * 0.32,
+                    height: size * 0.16,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(size * 0.08),
+                    ),
                   ),
-                ],
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  // Purple Hair top arc
-                  Positioned(
-                    top: 0,
-                    child: Container(
-                      width: size * 0.44,
-                      height: size * 0.22,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF7E22CE),
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(100),
+                ),
+
+                // Left Ear
+                Positioned(
+                  left: -size * 0.025,
+                  top: size * 0.20,
+                  child: Container(
+                    width: size * 0.08,
+                    height: size * 0.08,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFD1A4),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+
+                // Right Ear
+                Positioned(
+                  right: -size * 0.025,
+                  top: size * 0.20,
+                  child: Container(
+                    width: size * 0.08,
+                    height: size * 0.08,
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFFFD1A4),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+
+                // Head Container
+                Container(
+                  width: size * 0.44,
+                  height: size * 0.44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFFFFDFBA),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.12),
+                        blurRadius: 16,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // Purple Hair back / top volume
+                      Positioned(
+                        top: 0,
+                        child: Container(
+                          width: size * 0.44,
+                          height: size * 0.22,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF7E22CE),
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(100),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
 
-                  // Wavy hair curls
-                  Positioned(
-                    top: size * 0.15,
-                    left: 6,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF7E22CE),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: size * 0.15,
-                    right: 6,
-                    child: Container(
-                      width: 14,
-                      height: 14,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF7E22CE),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-
-                  // Eyes
-                  Positioned(
-                    top: size * 0.21,
-                    left: size * 0.12,
-                    child: Container(
-                      width: 7,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF1E293B),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: size * 0.21,
-                    right: size * 0.12,
-                    child: Container(
-                      width: 7,
-                      height: 10,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF1E293B),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-
-                  // Cute Rosy Cheeks
-                  Positioned(
-                    top: size * 0.27,
-                    left: size * 0.08,
-                    child: Container(
-                      width: 10,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFF8A80).withValues(alpha: 0.6),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: size * 0.27,
-                    right: size * 0.08,
-                    child: Container(
-                      width: 10,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFF8A80).withValues(alpha: 0.6),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  ),
-
-                  // Small Smile
-                  Positioned(
-                    top: size * 0.29,
-                    child: Container(
-                      width: 12,
-                      height: 5,
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(color: Color(0xFF64748B), width: 2),
+                      // Stylish purple hair bangs swooping down
+                      Positioned(
+                        top: size * 0.10,
+                        left: size * 0.06,
+                        child: Transform.rotate(
+                          angle: -0.2,
+                          child: Container(
+                            width: size * 0.20,
+                            height: size * 0.10,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF6B21A8),
+                              borderRadius: BorderRadius.circular(size * 0.05),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                      Positioned(
+                        top: size * 0.08,
+                        right: size * 0.06,
+                        child: Transform.rotate(
+                          angle: 0.25,
+                          child: Container(
+                            width: size * 0.18,
+                            height: size * 0.09,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF7E22CE),
+                              borderRadius: BorderRadius.circular(size * 0.05),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Left Eye with cute highlight dot
+                      Positioned(
+                        top: size * 0.22,
+                        left: size * 0.12,
+                        child: Container(
+                          width: 8,
+                          height: 11,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF1E293B),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 1, right: 1),
+                              width: 3,
+                              height: 3,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Right Eye with cute highlight dot
+                      Positioned(
+                        top: size * 0.22,
+                        right: size * 0.12,
+                        child: Container(
+                          width: 8,
+                          height: 11,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF1E293B),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 1, right: 1),
+                              width: 3,
+                              height: 3,
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      // Rosy Cheeks
+                      Positioned(
+                        top: size * 0.28,
+                        left: size * 0.07,
+                        child: Container(
+                          width: 12,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFF8A80)
+                                .withValues(alpha: 0.65),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: size * 0.28,
+                        right: size * 0.07,
+                        child: Container(
+                          width: 12,
+                          height: 7,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFF8A80)
+                                .withValues(alpha: 0.65),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+
+                      // Cheerful Smile
+                      Positioned(
+                        top: size * 0.29,
+                        child: Container(
+                          width: 14,
+                          height: 8,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Color(0xFF1E293B), width: 2.2),
+                            ),
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
