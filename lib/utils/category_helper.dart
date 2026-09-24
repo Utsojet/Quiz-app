@@ -1,10 +1,92 @@
 import 'package:flutter/material.dart';
+import '../models/category_model.dart';
 import 'app_colors.dart';
 
-/// Metadata helper for OpenTDB categories, providing appropriate icons,
-/// pastel colors, and cleaned-up display names.
+/// Metadata helper for OpenTDB categories, providing 3D illustrated assets,
+/// pastel colors, and cleaned-up display names matching the Figma design.
 class CategoryHelper {
   CategoryHelper._();
+
+  /// Maps category names to 3D clay-render illustration assets
+  static String? getAssetImage(String categoryName) {
+    final lower = categoryName.toLowerCase();
+
+    if (lower.contains('general knowledge')) {
+      return 'assets/images/categories/general_knowledge.jpg';
+    }
+    if (lower.contains('book')) {
+      return 'assets/images/categories/books.jpg';
+    }
+    if (lower.contains('history')) {
+      return 'assets/images/categories/history.jpg';
+    }
+    if (lower.contains('nature') || lower.contains('science')) {
+      return 'assets/images/categories/science.jpg';
+    }
+    if (lower.contains('art')) {
+      return 'assets/images/categories/art.jpg';
+    }
+    if (lower.contains('vehicle') || lower.contains('car')) {
+      return 'assets/images/categories/vehicles.jpg';
+    }
+    if (lower.contains('film') || lower.contains('movie')) {
+      return 'assets/images/categories/film.jpg';
+    }
+    if (lower.contains('music')) {
+      return 'assets/images/categories/music.jpg';
+    }
+    if (lower.contains('video game')) {
+      return 'assets/images/categories/video_games.jpg';
+    }
+    if (lower.contains('board game')) {
+      return 'assets/images/categories/board_games.jpg';
+    }
+    if (lower.contains('sport')) {
+      return 'assets/images/categories/sports.jpg';
+    }
+    if (lower.contains('computer')) {
+      return 'assets/images/categories/computers.jpg';
+    }
+
+    return null;
+  }
+
+  /// Sorts categories so that the 6 featured categories from Figma Frame 1
+  /// appear first in exact order, followed by other categories.
+  static List<Category> sortCategoriesForDisplay(List<Category> categories) {
+    final priority = [
+      'general knowledge',
+      'book',
+      'history',
+      'science & nature',
+      'art',
+      'vehicle',
+      'film',
+      'music',
+      'video game',
+      'board game',
+      'computer',
+      'sport',
+    ];
+
+    final sorted = List<Category>.from(categories);
+    sorted.sort((a, b) {
+      final aName = a.name.toLowerCase();
+      final bName = b.name.toLowerCase();
+
+      int aIndex = priority.indexWhere((p) => aName.contains(p));
+      int bIndex = priority.indexWhere((p) => bName.contains(p));
+
+      if (aIndex == -1) aIndex = 999;
+      if (bIndex == -1) bIndex = 999;
+
+      if (aIndex != bIndex) {
+        return aIndex.compareTo(bIndex);
+      }
+      return a.id.compareTo(b.id);
+    });
+    return sorted;
+  }
 
   static IconData getIcon(String categoryName) {
     final lower = categoryName.toLowerCase();
@@ -52,52 +134,73 @@ class CategoryHelper {
   static Color getBackgroundColor(String categoryName, int index) {
     final lower = categoryName.toLowerCase();
 
-    if (lower.contains('general knowledge')) return AppColors.pastelBlue;
-    if (lower.contains('book')) return AppColors.pastelGreen;
-    if (lower.contains('history')) return AppColors.pastelYellow;
+    if (lower.contains('general knowledge')) return const Color(0xFFD4E4FC);
+    if (lower.contains('book')) return const Color(0xFFCEF7D2);
+    if (lower.contains('history')) return const Color(0xFFFEF7B6);
     if (lower.contains('nature') || lower.contains('science')) {
-      return AppColors.pastelPurple;
+      return const Color(0xFFF2D0F8);
     }
-    if (lower.contains('art')) return AppColors.pastelPink;
-    if (lower.contains('vehicle')) return AppColors.pastelOrange;
-    if (lower.contains('sport')) return AppColors.pastelTeal;
-    if (lower.contains('music')) return AppColors.pastelPink;
-    if (lower.contains('computer')) return AppColors.pastelIndigo;
-    if (lower.contains('geography')) return AppColors.pastelBlue;
-    if (lower.contains('animal')) return AppColors.pastelGreen;
+    if (lower.contains('art')) return const Color(0xFFFFCAD0);
+    if (lower.contains('vehicle') || lower.contains('car')) {
+      return const Color(0xFFFFE0BA);
+    }
+    if (lower.contains('film') || lower.contains('movie')) {
+      return const Color(0xFFFEF7B6);
+    }
+    if (lower.contains('music')) return const Color(0xFFFFCAD0);
+    if (lower.contains('video game')) return const Color(0xFFCEF5ED);
+    if (lower.contains('board game')) return const Color(0xFFD6E4FF);
+    if (lower.contains('sport')) return const Color(0xFFD2F7D6);
+    if (lower.contains('computer')) return const Color(0xFFE4D8F8);
+    if (lower.contains('geography')) return const Color(0xFFD4E4FC);
+    if (lower.contains('animal')) return const Color(0xFFCEF7D2);
 
     // Fallback cycle through pastel colors based on index
     const palette = [
-      AppColors.pastelBlue,
-      AppColors.pastelGreen,
-      AppColors.pastelYellow,
-      AppColors.pastelPurple,
-      AppColors.pastelPink,
-      AppColors.pastelOrange,
-      AppColors.pastelTeal,
-      AppColors.pastelIndigo,
+      Color(0xFFD4E4FC),
+      Color(0xFFCEF7D2),
+      Color(0xFFFEF7B6),
+      Color(0xFFF2D0F8),
+      Color(0xFFFFCAD0),
+      Color(0xFFFFE0BA),
+      Color(0xFFCEF5ED),
+      Color(0xFFE4D8F8),
     ];
     return palette[index % palette.length];
   }
 
   static Color getIconColor(Color backgroundColor) {
     // Generate a deep complementary accent for the icon
-    if (backgroundColor == AppColors.pastelBlue) return const Color(0xFF2563EB);
-    if (backgroundColor == AppColors.pastelGreen) {
+    if (backgroundColor == const Color(0xFFD4E4FC) ||
+        backgroundColor == AppColors.pastelBlue) {
+      return const Color(0xFF2563EB);
+    }
+    if (backgroundColor == const Color(0xFFCEF7D2) ||
+        backgroundColor == AppColors.pastelGreen) {
       return const Color(0xFF16A34A);
     }
-    if (backgroundColor == AppColors.pastelYellow) {
+    if (backgroundColor == const Color(0xFFFEF7B6) ||
+        backgroundColor == AppColors.pastelYellow) {
       return const Color(0xFFD97706);
     }
-    if (backgroundColor == AppColors.pastelPurple) {
+    if (backgroundColor == const Color(0xFFF2D0F8) ||
+        backgroundColor == AppColors.pastelPurple) {
       return const Color(0xFF7C3AED);
     }
-    if (backgroundColor == AppColors.pastelPink) return const Color(0xFFE11D48);
-    if (backgroundColor == AppColors.pastelOrange) {
+    if (backgroundColor == const Color(0xFFFFCAD0) ||
+        backgroundColor == AppColors.pastelPink) {
+      return const Color(0xFFE11D48);
+    }
+    if (backgroundColor == const Color(0xFFFFE0BA) ||
+        backgroundColor == AppColors.pastelOrange) {
       return const Color(0xFFEA580C);
     }
-    if (backgroundColor == AppColors.pastelTeal) return const Color(0xFF0D9488);
-    if (backgroundColor == AppColors.pastelIndigo) {
+    if (backgroundColor == const Color(0xFFCEF5ED) ||
+        backgroundColor == AppColors.pastelTeal) {
+      return const Color(0xFF0D9488);
+    }
+    if (backgroundColor == const Color(0xFFE4D8F8) ||
+        backgroundColor == AppColors.pastelIndigo) {
       return const Color(0xFF4F46E5);
     }
     return AppColors.primary;

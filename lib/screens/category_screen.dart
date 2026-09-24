@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../providers/category_provider.dart';
 import '../providers/quiz_provider.dart';
 import '../utils/app_colors.dart';
+import '../utils/category_helper.dart';
 import '../widgets/category_card.dart';
 import '../widgets/error_retry_widget.dart';
 import '../widgets/loading_widget.dart';
@@ -77,9 +78,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Text(
                         'choose a category to focus on:',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
+                          fontStyle: FontStyle.italic,
+                          fontFamily: 'serif',
                           fontWeight: FontWeight.w400,
-                          color: AppColors.textSecondary.withValues(alpha: 0.8),
+                          color: const Color(0xFF94A3B8),
                           letterSpacing: 0.2,
                         ),
                       ),
@@ -105,7 +108,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         );
                       }
 
-                      final categories = provider.categories;
+                      final categories = CategoryHelper.sortCategoriesForDisplay(
+                          provider.categories);
 
                       if (categories.isEmpty) {
                         return Center(
@@ -122,17 +126,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         builder: (context, constraints) {
                           final width = constraints.maxWidth;
                           int crossAxisCount = 2;
-                          double childAspectRatio = 0.88;
+                          double childAspectRatio = 0.80;
 
                           if (width >= 720) {
                             crossAxisCount = 4;
-                            childAspectRatio = 0.95;
+                            childAspectRatio = 0.88;
                           } else if (width >= 480) {
                             crossAxisCount = 3;
-                            childAspectRatio = 0.92;
+                            childAspectRatio = 0.84;
                           } else {
                             crossAxisCount = 2;
-                            childAspectRatio = 0.88;
+                            childAspectRatio = 0.80;
                           }
 
                           return GridView.builder(

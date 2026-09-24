@@ -11,17 +11,17 @@ class CategorySkeletonGrid extends StatelessWidget {
       builder: (context, constraints) {
         final width = constraints.maxWidth;
         int crossAxisCount = 2;
-        double childAspectRatio = 0.88;
+        double childAspectRatio = 0.80;
 
         if (width >= 720) {
           crossAxisCount = 4;
-          childAspectRatio = 0.95;
+          childAspectRatio = 0.88;
         } else if (width >= 480) {
           crossAxisCount = 3;
-          childAspectRatio = 0.92;
+          childAspectRatio = 0.84;
         } else {
           crossAxisCount = 2;
-          childAspectRatio = 0.88;
+          childAspectRatio = 0.80;
         }
 
         return GridView.builder(
@@ -39,24 +39,29 @@ class CategorySkeletonGrid extends StatelessWidget {
                 color: const Color(0xFFF1F5F9),
                 borderRadius: BorderRadius.circular(22),
               ),
+              padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 58,
-                    height: 58,
-                    decoration: const BoxDecoration(
-                      color: Color(0xFFE2E8F0),
-                      shape: BoxShape.circle,
+                  Expanded(
+                    child: Center(
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE2E8F0),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                   Container(
-                    width: 80,
+                    width: 75,
                     height: 14,
                     decoration: BoxDecoration(
                       color: const Color(0xFFE2E8F0),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(6),
                     ),
                   ),
                 ],

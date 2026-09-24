@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/category_model.dart';
-import '../utils/app_colors.dart';
 import '../utils/category_helper.dart';
 
 /// Card widget displaying a trivia category with soft pastel background,
@@ -20,8 +19,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bgColor = CategoryHelper.getBackgroundColor(category.name, index);
-    final iconColor = CategoryHelper.getIconColor(bgColor);
-    final icon = CategoryHelper.getIcon(category.name);
+    final assetImage = CategoryHelper.getAssetImage(category.name);
     final displayName = CategoryHelper.formatName(category.name);
 
     return Material(
@@ -29,8 +27,8 @@ class CategoryCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(22),
-        splashColor: iconColor.withValues(alpha: 0.15),
-        highlightColor: iconColor.withValues(alpha: 0.05),
+        splashColor: Colors.black.withValues(alpha: 0.05),
+        highlightColor: Colors.black.withValues(alpha: 0.03),
         child: Ink(
           decoration: BoxDecoration(
             color: bgColor,
@@ -43,51 +41,71 @@ class CategoryCard extends StatelessWidget {
               ),
             ],
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+          padding: const EdgeInsets.fromLTRB(14, 10, 14, 14),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Icon Badge container
-              Container(
-                width: 58,
-                height: 58,
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.9),
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.06),
-                      blurRadius: 8,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Icon(
-                  icon,
-                  size: 30,
-                  color: iconColor,
+              // 3D Illustrated Visual matching Figma Frame 1
+              Expanded(
+                child: Center(
+                  child: assetImage != null
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                          child: Image.asset(
+                            assetImage,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) {
+                              return _buildFallbackIcon(bgColor);
+                            },
+                          ),
+                        )
+                      : _buildFallbackIcon(bgColor),
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 6),
 
-              // Category Title
+              // Category Title aligned to bottom-left matching Figma Frame 1
               Text(
                 displayName,
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.left,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
-                  letterSpacing: -0.2,
-                  height: 1.2,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF1E293B),
+                  letterSpacing: -0.3,
+                  height: 1.15,
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFallbackIcon(Color bgColor) {
+    final icon = CategoryHelper.getIcon(category.name);
+    final iconColor = CategoryHelper.getIconColor(bgColor);
+    return Container(
+      width: 54,
+      height: 54,
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.85),
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Icon(
+        icon,
+        size: 28,
+        color: iconColor,
       ),
     );
   }
