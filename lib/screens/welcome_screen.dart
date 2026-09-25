@@ -105,9 +105,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final illustrationSize = (size.height * 0.35).clamp(200.0, 290.0);
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -116,118 +113,128 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             constraints: const BoxConstraints(maxWidth: 520),
             child: LayoutBuilder(
               builder: (context, constraints) {
+                final illustrationSize =
+                    (constraints.maxHeight * 0.30).clamp(130.0, 270.0);
+
                 return SingleChildScrollView(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 28, vertical: 20),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    children: [
-                      const Spacer(flex: 1),
-
-                      // Top Quiz & Avatar Hero Illustration
-                      WelcomeHeroIllustration(size: illustrationSize),
-
-                      const SizedBox(height: 32),
-
-                      // App Title "Quizzical"
-                      const Text(
-                        'Quizzical',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 38,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.textPrimary,
-                          letterSpacing: -0.5,
+                  physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics(),
+                  ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 28,
+                          vertical: 16,
                         ),
-                      ),
-                      const SizedBox(height: 10),
-
-                      // Student Name / Customizable label with quick-edit
-                      GestureDetector(
-                        onTap: _showEditNameDialog,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        child: Column(
                           children: [
-                            Flexible(
-                              child: Text(
-                                _studentName,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textSecondary,
-                                  letterSpacing: 0.2,
+                            const Spacer(flex: 1),
+
+                            // Top Quiz & Avatar Hero Illustration
+                            WelcomeHeroIllustration(size: illustrationSize),
+
+                            const SizedBox(height: 20),
+
+                            // App Title "Quizzical"
+                            const Text(
+                              'Quizzical',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.w900,
+                                color: AppColors.textPrimary,
+                                letterSpacing: -0.5,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+
+                            // Student Name / Customizable label with quick-edit
+                            GestureDetector(
+                              onTap: _showEditNameDialog,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      _studentName,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                        color: AppColors.textSecondary,
+                                        letterSpacing: 0.2,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Icon(
+                                    Icons.edit_outlined,
+                                    size: 18,
+                                    color: AppColors.textMuted,
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+                            const Text(
+                              'Test your knowledge with fun trivia!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textMuted,
+                              ),
+                            ),
+
+                            const Spacer(flex: 2),
+
+                            // Main Primary CTA: "GET STARTED"
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const CategoryScreen(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primary,
+                                foregroundColor: Colors.white,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                                minimumSize: const Size.fromHeight(56),
+                              ),
+                              child: const Text(
+                                'GET STARTED',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 1.0,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 6),
-                            const Icon(
-                              Icons.edit_outlined,
-                              size: 18,
-                              color: AppColors.textMuted,
-                            ),
+
+                            const SizedBox(height: 12),
                           ],
                         ),
                       ),
-
-                      const SizedBox(height: 12),
-                      const Text(
-                        'Test your knowledge with fun trivia!',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textMuted,
-                        ),
-                      ),
-
-                      const Spacer(flex: 2),
-
-                      // Main Primary CTA: "GET STARTED"
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const CategoryScreen(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
-                          ),
-                          minimumSize: const Size.fromHeight(56),
-                        ),
-                        child: const Text(
-                          'GET STARTED',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.0,
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 16),
-                    ],
+                    ),
                   ),
-                ),
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ),
         ),
       ),
-    ),
-  ),
-);
+    );
   }
 }

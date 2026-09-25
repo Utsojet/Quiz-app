@@ -47,22 +47,27 @@ class ResultScreen extends StatelessWidget {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   return SingleChildScrollView(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 28, vertical: 20),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: [
-                        const Spacer(flex: 1),
+                    physics: const AlwaysScrollableScrollPhysics(
+                      parent: BouncingScrollPhysics(),
+                    ),
+                    child: ConstrainedBox(
+                      constraints:
+                          BoxConstraints(minHeight: constraints.maxHeight),
+                      child: IntrinsicHeight(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 28, vertical: 16),
+                          child: Column(
+                            children: [
+                              const Spacer(flex: 1),
 
-                        // Visual State Illustration (Party Popper or Keep Trying)
-                        if (isHighScore)
-                          const PartyPopperIllustration(size: 210)
-                        else
-                          const KeepTryingIllustration(size: 190),
+                              // Visual State Illustration (Party Popper or Keep Trying)
+                              if (isHighScore)
+                                const PartyPopperIllustration(size: 210)
+                              else
+                                const KeepTryingIllustration(size: 190),
 
-                        const SizedBox(height: 24),
+                              const SizedBox(height: 20),
 
                         // Title matching Screenshot 6 / 7
                         Text(
@@ -203,7 +208,8 @@ class ResultScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              );
+              ),
+            );
             },
           ),
         ),

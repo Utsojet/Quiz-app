@@ -685,24 +685,30 @@ class KeepTryingIllustration extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.fitness_center_rounded,
-                  size: 42,
-                  color: Color(0xFFEF4444),
+            child: const FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.fitness_center_rounded,
+                      size: 42,
+                      color: Color(0xFFEF4444),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      'Practice',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 6),
-                Text(
-                  'Practice',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF64748B),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
 
